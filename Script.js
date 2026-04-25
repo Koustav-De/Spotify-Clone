@@ -57,6 +57,11 @@ Array.from(document.getElementsByClassName("card")).forEach(e => {
     e.addEventListener("click", async item => {
         songs = await getSongs(item.currentTarget.dataset.folder)
         renderSongs()
+
+        if (window.innerWidth <= 768) {
+            document.querySelector(".left-box").style.left = "0"
+            document.body.classList.add("sidebar-open")
+        }
     })
 })
 
