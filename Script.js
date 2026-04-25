@@ -58,7 +58,7 @@ Array.from(document.getElementsByClassName("card")).forEach(e => {
         songs = await getSongs(item.currentTarget.dataset.folder)
         renderSongs()
 
-        if (window.innerWidth <= 768) {
+        if (window.innerWidth <= 1024) {
             document.querySelector(".left-box").style.left = "0"
             document.body.classList.add("sidebar-open")
         }
