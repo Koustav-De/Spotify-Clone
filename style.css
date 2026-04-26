@@ -259,22 +259,21 @@ body {
 .seekbar {
     height: 4px;
     width: 50%;
-    border: 2px solid white;
-    background-color: white;
+    background-color: grey;
     border-radius: 4px;
     position: absolute;
     bottom: 8px;
     cursor: pointer;
+    transition: background 0.5s;
 }
 
 .circle {
     height: 15px;
     width: 15px;
-    /* border: 2px solid red; */
     border-radius: 50%;
     background-color: white;
     position: relative;
-    bottom: 8px;
+    bottom: 6px;
     left: -1%;
     transition: left 0.5s;
 }
@@ -378,16 +377,6 @@ input[type="range"] {
         height: auto;
         gap: 8px;
         padding: 10px;
-    }
-
-    .songinfo {
-        font-size: 14px;
-        text-align: center;
-    }
-
-    .songtime {
-        font-size: 12px;
-        text-align: center;
     }
 
     .songbtn {

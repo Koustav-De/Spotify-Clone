@@ -168,6 +168,8 @@ currentAudio.addEventListener("timeupdate", () => {
     if (!isNaN(currentAudio.duration)) {
         let percent = -1 + (currentAudio.currentTime / currentAudio.duration) * 100
         document.querySelector(".circle").style.left = percent + "%"
+        document.querySelector(".seekbar").style.background =
+        `linear-gradient(to right, white ${percent}%, grey ${percent}%)`
     }
 })
 
