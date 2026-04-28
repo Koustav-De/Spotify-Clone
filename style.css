@@ -448,7 +448,7 @@ input[type="range"] {
     .circle {
         height: 12px;
         width: 12px;
-        bottom: 6px;
+        bottom: 4px;
     }
 
     .volume {
