@@ -15,6 +15,35 @@
 </head>
 
 <body>
+    <div class="auth-modal hidden">
+        <div class="auth-box">
+            <span class="close-auth">&times;</span>
+
+            <h2 id="auth-title">Login</h2>
+
+            <input type="text" id="auth-fname" placeholder="First name">
+            <input type="text" id="auth-lname" placeholder="Last name">
+            <input type="email" id="auth-email" placeholder="Email">
+            <div class="password-box">
+                <input type="password" id="auth-password" placeholder="Password">
+
+                <span class="toggle-pass">
+                    <!-- Eye icon (show) -->
+                    <img id="show" src="show.svg" alt="">
+
+                    <!-- Eye off icon (hide) -->
+                    <!-- <img id="hide" src="hide.svg" alt=""> -->
+                </span>
+            </div>
+
+            <button id="auth-submit">Login</button>
+
+            <p id="auth-toggle">
+                Don't have an account? <span>Sign up</span>
+            </p>
+        </div>
+    </div>
+
     <div class="container flex">
 
         <!-- Left box -->
@@ -152,10 +181,9 @@
                                     fill="currentColor" />
                             </svg>
                         </div>
-                        <img src="https://i.scdn.co/image/ab67616d00001e026404721c1943d5069f0805f3"
-                            alt="">
+                        <img src="https://i.scdn.co/image/ab67616d00001e026404721c1943d5069f0805f3" alt="">
                         <h2>Aashiqui 2</h2>
-                        <p style="color: #b3afaf">Album . Arijit Singh, Palak Muchal, Shradha Kapoor</p>
+                        <p style="color: #b3afaf">Album . Arijit Singh, Shreya Ghosal</p>
                     </div>
                 </div>
 
@@ -181,6 +209,7 @@
     </div>
 
     <script src="Script.js"></script>
+    <script type="module" src="auth.js"></script>
 </body>
 
 </html>

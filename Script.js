@@ -55,12 +55,16 @@ function addClickEvents() {
 // Load playlists when a card is clicked
 Array.from(document.getElementsByClassName("card")).forEach(e => {
     e.addEventListener("click", async item => {
+        item.stopPropagation()
+
         songs = await getSongs(item.currentTarget.dataset.folder)
         renderSongs()
 
         if (window.innerWidth <= 1024) {
-            document.querySelector(".left-box").style.left = "0"
-            document.body.classList.add("sidebar-open")
+            // document.querySelector(".left-box").style.left = "0"
+            // document.body.classList.add("sidebar-open")
+
+            openSidebar()
         }
     })
 })
@@ -169,7 +173,7 @@ currentAudio.addEventListener("timeupdate", () => {
         let percent = -1 + (currentAudio.currentTime / currentAudio.duration) * 100
         document.querySelector(".circle").style.left = percent + "%"
         document.querySelector(".seekbar").style.background =
-        `linear-gradient(to right, white ${percent}%, grey ${percent}%)`
+            `linear-gradient(to right, white ${percent}%, grey ${percent}%)`
     }
 })
 
@@ -177,6 +181,8 @@ currentAudio.addEventListener("timeupdate", () => {
 document.querySelector(".seekbar").addEventListener("click", e => {
     let percent = (e.offsetX / e.target.getBoundingClientRect().width) * 100
     document.querySelector(".circle").style.left = percent + "%"
+    document.querySelector(".seekbar").style.background =
+        `linear-gradient(to right, white ${percent}%, grey ${percent}%)`
     currentAudio.currentTime = (currentAudio.duration * percent) / 100
 })
 
@@ -192,22 +198,40 @@ currentAudio.addEventListener("ended", () => {
 })
 
 // Menu/Hamburger event
-document.querySelector(".hamburger").addEventListener("click", () => {
+function openSidebar() {
     document.querySelector(".left-box").style.left = "0"
-})
+    document.querySelector(".left-box").classList.add("active")
+    document.body.classList.add("sidebar-open")
+}
 
-document.querySelector(".close").addEventListener("click", () => {
+function closeSidebar() {
     document.querySelector(".left-box").style.left = "-100%"
-})
+    document.querySelector(".left-box").classList.remove("active")
+    document.body.classList.remove("sidebar-open")
+}
 
-document.querySelector(".hamburger").addEventListener("click", () => {
-    document.querySelector(".left-box").classList.toggle("active")
-    document.body.classList.toggle("sidebar-open")
+document.querySelector(".hamburger").addEventListener("click", (e) => {
+    e.stopPropagation()
+    openSidebar()
 })
 
 document.querySelector(".close").addEventListener("click", () => {
-    document.querySelector(".left-box").classList.toggle("active")
-    document.body.classList.toggle("sidebar-open")
+    closeSidebar()
+})
+
+document.addEventListener("click", (e) => {
+    if (window.innerWidth > 1024) return
+
+    let sidebar = document.querySelector(".left-box")
+
+    if (!sidebar.classList.contains("active")) return
+
+    if (!e.target.closest(".left-box") &&
+        !e.target.closest(".hamburger") &&
+        !e.target.closest(".card")) {
+
+        closeSidebar()
+    }
 })
 
 // Volume change event
@@ -234,3 +258,107 @@ document.querySelector("#vol").addEventListener("click", () => {
         document.querySelector(".volume #vol").src = "volume.svg"
     }
 })
+
+// Signup/Login
+const modal = document.querySelector(".auth-modal");
+const closeBtn = document.querySelector(".close-auth");
+const authTitle = document.getElementById("auth-title");
+const authSubmit = document.getElementById("auth-submit");
+const toggleText = document.getElementById("auth-toggle");
+
+let isLogin = true;
+
+// Open modal
+document.addEventListener("click", (e) => {
+    if (e.target.closest(".login")) {
+        modal.classList.remove("hidden");
+        isLogin = true;
+        updateAuthUI();
+    }
+
+    if (e.target.closest(".sign")) {
+        modal.classList.remove("hidden");
+        isLogin = false;
+        updateAuthUI();
+    }
+});
+
+// Close modal
+closeBtn.addEventListener("click", () => {
+    modal.classList.add("hidden");
+});
+
+// Toggle login/signup
+toggleText.addEventListener("click", () => {
+    isLogin = !isLogin;
+    updateAuthUI();
+});
+
+function updateAuthUI() {
+    let fname = document.getElementById("auth-fname");
+    let lname = document.getElementById("auth-lname");
+
+    if (isLogin) {
+        authTitle.innerText = "Login";
+        authSubmit.innerText = "Login";
+        toggleText.innerHTML = `Don't have an account? <span>Sign up</span>`;
+
+        fname.style.display = "none";
+        lname.style.display = "none";
+
+    } else {
+        authTitle.innerText = "Sign Up";
+        authSubmit.innerText = "Sign Up";
+        toggleText.innerHTML = `Already have an account? <span>Login</span>`;
+
+        fname.style.display = "block";
+        lname.style.display = "block";
+    }
+}
+
+authSubmit.addEventListener("click", async () => {
+    let fname = document.getElementById("auth-fname").value;
+    let lname = document.getElementById("auth-lname").value;
+    let email = document.getElementById("auth-email").value;
+    let password = document.getElementById("auth-password").value;
+
+    try {
+        if (isLogin) {
+            // LOGIN (no name needed)
+            await signInWithEmailAndPassword(auth, email, password);
+            alert("Login successful 🔐");
+
+        } else {
+            // SIGNUP
+            let userCred = await createUserWithEmailAndPassword(auth, email, password);
+
+            // Save full name
+            await updateProfile(auth.currentUser, {
+                displayName: fname + " " + lname
+            })
+
+            alert("Signup successful 🎉");
+        }
+
+        modal.classList.add("hidden");
+
+        location.reload()
+
+    } catch (err) {
+        alert(err.message);
+    }
+});
+
+// Show/Hide icon
+const passwordInput = document.getElementById("auth-password");
+const show = document.getElementById("show");
+
+document.querySelector(".toggle-pass").addEventListener("click", () => {
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        document.querySelector("#show").src = "hide.svg"
+    } else {
+        passwordInput.type = "password";
+        document.querySelector("#show").src = "show.svg"
+    }
+});
