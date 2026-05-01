@@ -15,6 +15,7 @@ async function getSongs(folder) {
 
 // Rendering songs
 async function main(folder) {
+    currFolder = folder
     songs = await getSongs(folder)
     renderSongs()
 }
@@ -57,13 +58,12 @@ Array.from(document.getElementsByClassName("card")).forEach(e => {
     e.addEventListener("click", async item => {
         item.stopPropagation()
 
-        songs = await getSongs(item.currentTarget.dataset.folder)
+        currFolder = item.currentTarget.dataset.folder
+
+        songs = await getSongs(currFolder)
         renderSongs()
 
         if (window.innerWidth <= 1024) {
-            // document.querySelector(".left-box").style.left = "0"
-            // document.body.classList.add("sidebar-open")
-
             openSidebar()
         }
     })
@@ -361,4 +361,42 @@ document.querySelector(".toggle-pass").addEventListener("click", () => {
         passwordInput.type = "password";
         document.querySelector("#show").src = "show.svg"
     }
-});
+})
+
+// Search for a song
+async function getAllSongs() {
+    let res = await fetch("Songs/general.json")
+    return await res.json()
+}
+
+searchInput.addEventListener("input", async () => {
+    let query = searchInput.value.toLowerCase()
+
+    if (!query) {
+        if (currFolder) {
+            songs = await getSongs(currFolder)
+        } else {
+            songs = []
+        }
+        renderSongs()
+        return
+    }
+
+    let sourceSongs
+
+    if (currFolder) {
+        // Search inside selected folder
+        sourceSongs = await getSongs(currFolder)
+    } else {
+        // Search globally
+        sourceSongs = await getAllSongs()
+    }
+
+    let filtered = sourceSongs.filter(song =>
+        song.name.toLowerCase().includes(query)
+    )
+
+    songs = filtered
+    renderSongs()
+})
+
