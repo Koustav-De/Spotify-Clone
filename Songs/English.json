@@ -52,5 +52,35 @@
     {
         "name" : "Shape Of You",
         "url" : "https://res.cloudinary.com/dyodxxbhl/video/upload/v1777132496/Ed_Sheeran_-_Shape_of_You_Lyrics_-_7clouds_qpnb8t.mp3"
+    },
+
+    {
+        "name" : "Oh To Be Loved",
+        "url" : "https://res.cloudinary.com/dyodxxbhl/video/upload/v1777986512/JVKE_-_oh_to_be_loved_Official_Lyric_Video_qnp5vq.mp3"
+    },
+
+    {
+        "name" : "Until I Found You",
+        "url" : "https://res.cloudinary.com/dyodxxbhl/video/upload/v1777986510/Stephen_Sanchez_-_Juliet_to_your_Romeo_Until_I_Found_You_Lyrics_ft._Em_Beihold_nfsstk.mp3"
+    },
+
+    {
+        "name" : "Sapphire",
+        "url" : "https://res.cloudinary.com/dyodxxbhl/video/upload/v1777986504/Ed_Sheeran_-_Sapphire_Lyrics_ft._Arijit_Singh_uxxl1n.mp3"
+    },
+
+    {
+        "name" : "Night Changes",
+        "url" : "https://res.cloudinary.com/dyodxxbhl/video/upload/v1777986503/One_Direction_-_Night_Changes_Lyrics_natewb.mp3"
+    },
+
+    {
+        "name" : "On My Way",
+        "url" : "https://res.cloudinary.com/dyodxxbhl/video/upload/v1777986502/Alan_Walker_Sabrina_Carpenter_Farruko_-_On_My_Way_Lyrics_m1zbzs.mp3"
+    },
+
+    {
+        "name" : "Aurora-Runaway",
+        "url" : "https://res.cloudinary.com/dyodxxbhl/video/upload/v1777986501/AURORA_-_Runaway_Lyrics_i4s3gs.mp3"
     }
 ]

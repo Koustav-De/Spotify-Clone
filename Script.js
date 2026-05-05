@@ -366,7 +366,11 @@ document.querySelector(".toggle-pass").addEventListener("click", () => {
 // Search for a song
 async function getAllSongs() {
     let res = await fetch("Songs/general.json")
-    return await res.json()
+    let data = await res.json()
+
+    // Sort all songs
+    data.sort((a, b) => a.name.localeCompare(b.name))
+    return data
 }
 
 searchInput.addEventListener("input", async () => {
@@ -400,3 +404,25 @@ searchInput.addEventListener("input", async () => {
     renderSongs()
 })
 
+// Home button
+let homeActive = false
+document.querySelector(".home li:first-child").addEventListener("click", async () => {
+
+    homeActive = !homeActive
+
+    if (homeActive) {
+        
+        // Show all songs
+        songs = await getAllSongs()
+        currFolder = null
+        document.querySelector(".home li:first-child").classList.add("active")
+
+    } else {
+        
+        // Clear list
+        songs = []
+        document.querySelector(".home li:first-child").classList.remove("active")
+    }
+
+    renderSongs()
+});
