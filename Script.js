@@ -86,8 +86,9 @@ function playSong(index) {
     index = parseInt(index)
     let song = songs[index]
 
-    currentAudio.src = encodeURI(song.url)
+    currentAudio.src = song.url
     currentAudio.preload = "metadata"
+
     currentAudio.play()
 
     currentSongIndex = index
